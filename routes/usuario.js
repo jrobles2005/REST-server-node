@@ -8,6 +8,8 @@ const _ = require('underscore');
 
 const Usuario = require('../models/user');
 
+const { verificaToken } = require('../server/middlewares/autenticacion');
+const { verificaAdmin_Role } = require('../server/middlewares/autenticacion');
 
 
 app.get('/', function(req, res) {
@@ -50,7 +52,9 @@ app.get('/usuarios', function(req, res) {
  */
 //devueve el listado de los usuarios activos{estado:true}
 
-app.get('/usuarios', function(req, res) {
+
+//solicitid GET con middleware de verificacion de token
+app.get('/usuarios', verificaToken, (req, res) => {
 
     let desde = req.query.desde || 0;
     desde = Number(desde);
@@ -82,7 +86,7 @@ app.get('/usuarios', function(req, res) {
 })
 
 
-app.post('/usuarios', function(req, res) {
+app.post('/usuarios', [verificaToken, verificaAdmin_Role], function(req, res) {
 
     let body = req.body;
     let usuario = new Usuario({
@@ -113,7 +117,7 @@ app.post('/usuarios', function(req, res) {
 })
 
 
-app.put('/usuarios/:id', function(req, res) {
+app.put('/usuarios/:id', [verificaToken, verificaAdmin_Role], function(req, res) {
     let id = req.params.id;
     let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
     Usuario.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, usuarioDB) => {
@@ -137,7 +141,7 @@ app.put('/usuarios/:id', function(req, res) {
 
 //DELETE marcando el registro con estado:false
 
-app.delete('/usuarios/:id', function(req, res) {
+app.delete('/usuarios/:id', verificaToken, function(req, res) {
 
 
     let id = req.params.id;
