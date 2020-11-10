@@ -36,3 +36,8 @@ process.env.URLDB = urlDB;
 //forzamos la conexion a la base de datos de AtlasDb
 
 //process.env.URLDB = 'mongodb+srv://cafe-user:user-cafe@cluster0.8epos.mongodb.net/cafe?retryWrites=true&w=majority';
+//============================
+//Google client ID
+//============================
+
+process.env.CLIENT_ID = process.env.CLIENT_ID || '637925485857-dhv48bc6v5fbnh7aug906g87tcp23s90.apps.googleusercontent.com';

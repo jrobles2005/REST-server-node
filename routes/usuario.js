@@ -11,11 +11,11 @@ const Usuario = require('../models/user');
 const { verificaToken } = require('../server/middlewares/autenticacion');
 const { verificaAdmin_Role } = require('../server/middlewares/autenticacion');
 
-
+/* 
 app.get('/', function(req, res) {
     res.json({ nombre: 'Hola Mundo' });
 })
-
+ */
 //devuelve el listado de todos los usuarios de la base de datos
 /* 
 app.get('/usuarios', function(req, res) {
